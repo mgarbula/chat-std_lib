@@ -12,9 +12,10 @@ public class Server {
         this.serverSocket = serverSocket;
     }
 
-    public void startServer() {
+    public void startServer() throws IOException {
         while (true) {
-            AcceptNewClient accept = new AcceptNewClient(serverSocket);
+            Socket socket = serverSocket.accept();
+            AcceptNewClient accept = new AcceptNewClient(socket);
             Thread thread = new Thread(accept);
             thread.start();
         }

@@ -1,24 +1,18 @@
 package server;
 
-import java.io.IOException;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 class AcceptNewClient extends Thread {
-    private final ServerSocket serverSocket;
+    private final Socket socket;
 
-    public AcceptNewClient(ServerSocket serverSocket) {
-        this.serverSocket = serverSocket;
+    public AcceptNewClient(Socket socket) {
+        this.socket = socket;
     }
 
     @Override
     public void run() {
-        try {
-            Socket socket = serverSocket.accept();
-            System.out.println("SERVER: New client connected");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        System.out.println("SERVER: New client connected");
+        ClientHandler clientHandler = new ClientHandler(socket);
+        clientHandler.start();
     }
 }
